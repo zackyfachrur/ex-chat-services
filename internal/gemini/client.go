@@ -2,10 +2,11 @@ package gemini
 
 import (
 	"context"
-	"os"
-
 	"github.com/google/generative-ai-go/genai"
+	"github.com/joho/godotenv"
 	"google.golang.org/api/option"
+	"log"
+	"os"
 )
 
 type Client struct {
@@ -15,6 +16,9 @@ type Client struct {
 
 // NewClient membuat instance baru Gemini Client
 func NewClient() (*Client, error) {
+	if err := godotenv.Load(); err != nil {
+		log.Fatal("Error loading .env file")
+	}
 	ctx := context.Background()
 	client, err := genai.NewClient(ctx, option.WithAPIKey(os.Getenv("GEMINI_API_KEY_EKSPOR")))
 	if err != nil {
